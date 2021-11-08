@@ -26,13 +26,14 @@ public class Shoot : MonoBehaviour
         this.isReloading = GameManager.current.isReloading;
     }
     void ShootBullet(){
-        GameObject bullet = Instantiate(Resources.Load("Bullet"), transform.position, transform.rotation) as GameObject;
         Vector2 clickedPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 direction = (clickedPosition - (Vector2)bullet.transform.position).normalized;
+        GameObject bullet = Instantiate(Resources.Load("Bullet"), (Vector2) transform.position, transform.rotation) as GameObject;
+        //normalize the vector to get a unit vector to get mouse position to not matter
+        Vector2 direction = (clickedPosition - (Vector2)bullet.transform.position);//.normalized;
         Vector2 bulletVelocity = direction * bulletSpeed;
         bullet.GetComponent<Rigidbody2D>().AddForce(bulletVelocity, ForceMode2D.Impulse);
     }
-    Color HexToColor(string hex){ //assume hex is 6 digits
+    Color HexToColor(string hex){ //assume hex is 6 digits (no alpha)
         byte r = byte.Parse(hex.Substring(0,2), System.Globalization.NumberStyles.HexNumber);
         byte g = byte.Parse(hex.Substring(2,2), System.Globalization.NumberStyles.HexNumber);
         byte b = byte.Parse(hex.Substring(4,2), System.Globalization.NumberStyles.HexNumber);
