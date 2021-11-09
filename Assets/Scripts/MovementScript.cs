@@ -11,7 +11,7 @@ public class MovementScript : MonoBehaviour
     [SerializeField]
     private Vector2 _max_avgVelocity;
     [SerializeField]
-    private float _floatiness = 0.4f; //less equals more floaty
+    private float _floatiness = 0.4f; //smoll num uwu = more floaty
     private Rigidbody2D _rb;
 
     void Start()
@@ -20,7 +20,6 @@ public class MovementScript : MonoBehaviour
     }
     void Update()
     {
-        // Strings assigned to the horizontal and vertical axis of the keyboard by Unity
         /*Raw gets rid of the smoothing (compared to GetAxis which feels floaty)*/
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputY = Input.GetAxisRaw("Vertical");

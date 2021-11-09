@@ -13,7 +13,7 @@ public class Shoot : MonoBehaviour
     private float bulletSpeed;
     private float fireElapsedTime = 0;
     [SerializeField]
-    private float fireDelay = 0.2f;
+    private float fireDelay = 0.1f;
     GameObject reticle;
     
     void Start()
@@ -28,7 +28,7 @@ public class Shoot : MonoBehaviour
     void ShootBullet(){
         Vector2 clickedPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         GameObject bullet = Instantiate(Resources.Load("Bullet"), (Vector2) transform.position, transform.rotation) as GameObject;
-        //normalize the vector to get a unit vector to get mouse position to not matter
+        //you can normalize the vector to get a unit vector. however this makes the mouse position to the player not matter
         Vector2 direction = (clickedPosition - (Vector2)bullet.transform.position);//.normalized;
         Vector2 bulletVelocity = direction * bulletSpeed;
         bullet.GetComponent<Rigidbody2D>().AddForce(bulletVelocity, ForceMode2D.Impulse);
@@ -44,7 +44,6 @@ public class Shoot : MonoBehaviour
         fireElapsedTime += Time.deltaTime;
         if (Input.GetMouseButtonDown(0)){
             if(ammountOfAmmo > 0 && !isReloading){
-                reticle.GetComponent<SpriteRenderer>().color = HexToColor("FFBA14"); //yellowish orange
                 if (fireElapsedTime >= fireDelay){
                     //make shooty shoot sound
                     fireElapsedTime = 0;
@@ -55,6 +54,7 @@ public class Shoot : MonoBehaviour
             }
             else if(ammountOfAmmo > 15 && isReloading){
                 //make finished reload sound
+                reticle.GetComponent<SpriteRenderer>().color = HexToColor("FFBA14"); //yellowish orange
                 isReloading = false;
                 GameManager.current.Reload(isReloading: isReloading);
             }
@@ -63,7 +63,6 @@ public class Shoot : MonoBehaviour
                 //GetComponent<AudioSource>().Play();
                 isReloading = true;
                 ammountOfAmmo++;
-                Debug.Log(reticle.GetComponent<SpriteRenderer>().color);
                 reticle.GetComponent<SpriteRenderer>().color = HexToColor("FF4614"); //redish orange
                 GameManager.current.Reload(ammoAmmount: ammountOfAmmo, isReloading: isReloading);            
             }

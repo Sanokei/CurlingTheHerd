@@ -8,14 +8,8 @@ public class ChangeAmmoAmmount : MonoBehaviour
     {
         GameManager.current.onAmmoChange += ChangeAmmo;
     }
-    public void ChangeAmmo(){
-        Debug.Log(GameManager.current.ammoAmmount);
-        if(GameManager.current.ammoAmmount == 0){
-            gameObject.SetActive(false);
-        }
-        else{
-            gameObject.SetActive(true);
-            GetComponent<SpriteRenderer>().sprite = Resources.LoadAll<Sprite>("Sprites/Ammo")[GameManager.current.ammoAmmount-1] as Sprite;
-        }
+    
+    public void ChangeAmmo(){ //making it null just makes it a None spite
+        GetComponent<SpriteRenderer>().sprite = GameManager.current.ammoAmmount <= 0 ? null : GameManager.current.ammoAmmount >= 16 ? Resources.LoadAll<Sprite>("Sprites/Ammo")[15] as Sprite : Resources.LoadAll<Sprite>("Sprites/Ammo")[GameManager.current.ammoAmmount-1] as Sprite;
     }
 }

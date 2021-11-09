@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     private void Awake(){
         current = this;
     }
-
     public event Action onAmmoChange;
     public void Shoot(int ammoAmmount){
         this.ammoAmmount = ammoAmmount;
@@ -21,8 +20,7 @@ public class GameManager : MonoBehaviour
         }
 
     }
-
-    public void Reload(int ammoAmmount, bool isReloading = false){
+    public void Reload(int ammoAmmount, bool isReloading = false){ //cant leave ammoAmount ambigous with a default value
         this.ammoAmmount = ammoAmmount;
         this.isReloading = isReloading;
         if(onAmmoChange != null){
