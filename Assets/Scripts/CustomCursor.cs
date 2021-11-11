@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class CustomCursor : MonoBehaviour
 {
+    Camera cam;
     void Start()
     {
         Cursor.visible = false;
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
     void Update()
     {
-        transform.position = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+        transform.position = new Vector2(cam.ScreenToWorldPoint(Input.mousePosition).x, cam.ScreenToWorldPoint(Input.mousePosition).y);
     }
 }

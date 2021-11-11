@@ -23,6 +23,11 @@ public class MovementScript : MonoBehaviour
         /*Raw gets rid of the smoothing (compared to GetAxis which feels floaty)*/
         float inputX = Input.GetAxisRaw("Horizontal");
         float inputY = Input.GetAxisRaw("Vertical");
+        if(DialogManager.GetInstance().dialogIsPlaying || GoalManager.Dead){
+            inputX = 0;
+            inputY = 0;
+        }
+
         _rb.AddForce(
             new Vector2(
                 Mathf.Clamp((inputX == 0 ? -_rb.velocity.normalized.x * _floatiness : inputX * _avgVelocity.x),- _max_avgVelocity.x, _max_avgVelocity.x), 

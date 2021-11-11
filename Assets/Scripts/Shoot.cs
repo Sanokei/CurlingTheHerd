@@ -8,7 +8,7 @@ public class Shoot : MonoBehaviour
     private int ammountOfAmmo = 16; //add upgrades to get more ammo in the future (max 16)
     private static readonly int max_amount_of_ammo = 16;
     private Boolean isReloading = false;
-    
+    private Camera cam;
     [SerializeField]
     private float bulletSpeed;
     private float fireElapsedTime = 0;
@@ -20,13 +20,14 @@ public class Shoot : MonoBehaviour
     {
         GameManager.current.onAmmoChange += ChangeisReloading;
         reticle = GameObject.Find("Reticle");
+        cam = GameObject.Find("Main Camera").GetComponent<Camera>();
     }
     void ChangeisReloading()
     {
         this.isReloading = GameManager.current.isReloading;
     }
     void ShootBullet(){
-        Vector2 clickedPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 clickedPosition = cam.ScreenToWorldPoint(Input.mousePosition);
         GameObject bullet = Instantiate(Resources.Load("Bullet"), (Vector2) transform.position, transform.rotation) as GameObject;
         //you can normalize the vector to get a unit vector. however this makes the mouse position to the player not matter
         Vector2 direction = (clickedPosition - (Vector2)bullet.transform.position);//.normalized;
@@ -43,6 +44,7 @@ public class Shoot : MonoBehaviour
     void Update(){
         fireElapsedTime += Time.deltaTime;
         if (Input.GetMouseButtonDown(0)){
+            if(DialogManager.GetInstance().dialogIsPlaying || GoalManager.Dead) return;
             if(ammountOfAmmo > 0 && !isReloading){
                 if (fireElapsedTime >= fireDelay){
                     //make shooty shoot sound
@@ -70,7 +72,8 @@ public class Shoot : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.R)) //make this an upgrade later
         {
             reticle.GetComponent<SpriteRenderer>().color = HexToColor("FF4614"); //redish orange
-            GameManager.current.Reload(isReloading: true);
+            isReloading = true;
+            GameManager.current.Reload(isReloading: isReloading);
         }
     }
     

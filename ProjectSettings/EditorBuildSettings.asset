@@ -14,7 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/CurlingTheHerd.unity
     guid: 16ad20d05f9b7f0469bf06a43bfe223b
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/Credits.unity
-    guid: 35b5ba657b0dde2488b57d5b72ca2ff7
+    guid: 026ecc40bdd96d24dba1f55a07a4b983
   m_configObjects: {}
